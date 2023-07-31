@@ -1,0 +1,69 @@
+<template>
+  <div>
+    <div class="container">
+      <div class="row">
+        <div class="col-4 m-auto">
+          <form
+            enctype="multipart/form-data"
+            method="post"
+            action="/login/"
+            @submit.prevent="handleSubmit"
+          >
+            <h1>Вход</h1>
+            <label class="form-label">Имя пользователя</label>
+            <div class="input-group mb-3">
+              <input
+                v-model="formData.username"
+                type="text"
+                class="form-control"
+              />
+            </div>
+            <label class="form-label">Пароль</label>
+            <div class="input-group mb-3">
+              <input
+                v-model="formData.password"
+                type="password"
+                class="form-control"
+              />
+            </div>
+            <button type="submit" class="btn btn-info">Войти</button>
+          </form>
+          <div class="small">
+            <router-link :to="registerLink"> Регистрация </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import axios from "axios";
+import { reactive } from "vue";
+import importMeta from "../utils/importMeta.ts";
+
+const formData = reactive({
+  username: "",
+  password: "",
+});
+
+const registerLink = { name: "register" };
+
+const handleSubmit = async () => {
+  try {
+    // Теперь payload содержит объект formData целиком
+    const payload = { ...formData };
+
+    // Отправка данных на сервер с помощью POST-запроса с Axios
+    const response = await axios.post("/login/", payload, {
+      baseURL: importMeta.VITE_APP_BASE_URL,
+    });
+
+    // Здесь вы можете обрабатывать ответ от сервера, если необходимо
+
+    console.log("Успешно отправлено!", response);
+  } catch (error) {
+    console.error("Ошибка при отправке формы", error);
+  }
+};
+</script>
