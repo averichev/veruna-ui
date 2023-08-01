@@ -28,7 +28,7 @@
           <label class="form-label">Повторите пароль</label>
           <div class="input-group mb-3">
             <input
-              v-model="formData.passwordRepeat"
+              v-model="formData.password_repeat"
               type="password"
               class="form-control"
             />
@@ -51,7 +51,7 @@ import importMeta from "../utils/importMeta.ts";
 const formData = reactive({
   username: "",
   password: "",
-  passwordRepeat: "",
+  password_repeat: "",
 });
 
 // Обработчик отправки формы
@@ -61,7 +61,7 @@ const handleSubmit = async () => {
     const payload = { ...formData };
 
     // Отправка данных на сервер с помощью POST-запроса с Axios
-    const response = await axios.post("/login/", payload, {
+    const response = await axios.post("/register/", payload, {
       baseURL: importMeta.VITE_APP_BASE_URL,
     });
 
