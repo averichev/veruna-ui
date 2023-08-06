@@ -1,0 +1,19 @@
+name: Release Crate
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  semantic_release:
+    name: Semantic release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Semantic Release
+        uses: ridedott/release-me-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
