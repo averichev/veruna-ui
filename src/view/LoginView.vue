@@ -38,10 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import axios from "axios";
 import { reactive } from "vue";
-import importMeta from "../utils/importMeta.ts";
+import Default from "../plugins/httpClient.ts";
 
+const httpClient = new Default();
 const formData = reactive({
   username: "",
   password: "",
@@ -50,20 +50,15 @@ const formData = reactive({
 const registerLink = { name: "register" };
 
 const handleSubmit = async () => {
-  try {
-    // Теперь payload содержит объект formData целиком
-    const payload = { ...formData };
-
-    // Отправка данных на сервер с помощью POST-запроса с Axios
-    const response = await axios.post("/login/", payload, {
-      baseURL: importMeta.VITE_APP_BASE_URL,
+  const payload = { ...formData };
+  await httpClient
+    .post("/login/", payload)
+    .then((r) => {
+      console.log(r);
+      localStorage.setItem("jwt", r.data["data"]["token"]);
+    })
+    .catch((axiosError) => {
+      console.log(axiosError);
     });
-
-    // Здесь вы можете обрабатывать ответ от сервера, если необходимо
-
-    console.log("Успешно отправлено!", response);
-  } catch (error) {
-    console.error("Ошибка при отправке формы", error);
-  }
 };
 </script>
