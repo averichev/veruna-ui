@@ -53,9 +53,17 @@ const handleSubmit = async () => {
   const payload = { ...formData };
   await httpClient
     .post("/login/", payload)
-    .then((r) => {
+    .then(async (r) => {
       console.log(r);
       localStorage.setItem("jwt", r.data["data"]["token"]);
+      await httpClient
+        .post("/get-current-user/", { jwt: localStorage.getItem("jwt") })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((axiosError) => {
+          console.log(axiosError);
+        });
     })
     .catch((axiosError) => {
       console.log(axiosError);
