@@ -57,7 +57,7 @@ const handleSubmit = async () => {
       console.log(r);
       localStorage.setItem("jwt", r.data["data"]["token"]);
       await httpClient
-        .post("/get-current-user/", { jwt: localStorage.getItem("jwt") })
+        .post("/api/protected/get-current-user/")
         .then((response) => {
           console.log(response);
         })

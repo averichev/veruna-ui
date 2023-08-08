@@ -10,7 +10,7 @@ export default class Default {
   get(path: string) {
     return this.client.get(path);
   }
-  post(path: string, data: any) {
+  post(path: string, data?: any) {
     return this.client.post(path, data);
   }
   constructor() {
@@ -18,9 +18,9 @@ export default class Default {
   }
 
   private createAxiosInstance(baseUrl: string) {
-    const token = localStorage.getItem("app.token");
+    const token = localStorage.getItem("jwt");
     if (token) {
-      this.headers.Authorization = `Bearer ${token}`;
+      this.headers.Authorization = `${token}`;
     }
     return axios.create({
       baseURL: baseUrl,
