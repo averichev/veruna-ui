@@ -1,31 +1,37 @@
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import importMeta from "../utils/importMeta.ts";
-import axios, { AxiosInstance } from "axios";
 
 export default class Default {
   private client: AxiosInstance;
+  private readonly config: AxiosRequestConfig;
   private headers: any = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
   get(path: string) {
+    this.changeConfig();
     return this.client.get(path);
   }
   post(path: string, data?: any) {
+    this.changeConfig();
     return this.client.post(path, data);
   }
   constructor() {
-    this.client = this.createAxiosInstance(importMeta.VITE_APP_BASE_URL);
-  }
-
-  private createAxiosInstance(baseUrl: string) {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      this.headers.Authorization = `${token}`;
-    }
-    return axios.create({
-      baseURL: baseUrl,
+    this.config = {
+      baseURL: importMeta.VITE_APP_BASE_URL,
       headers: this.headers,
       withCredentials: true,
-    });
+    };
+    this.client = this.createAxiosInstance();
+  }
+  private changeConfig() {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      this.client.defaults.headers.common["Authorization"] = `${token}`;
+    }
+  }
+
+  private createAxiosInstance() {
+    return axios.create(this.config);
   }
 }
