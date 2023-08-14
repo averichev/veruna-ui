@@ -54,22 +54,10 @@ const formData = reactive({
   password_repeat: "",
 });
 
-// Обработчик отправки формы
 const handleSubmit = async () => {
-  try {
-    // Теперь payload содержит объект formData целиком
-    const payload = { ...formData };
-
-    // Отправка данных на сервер с помощью POST-запроса с Axios
-    const response = await axios.post("/register/", payload, {
-      baseURL: importMeta.VITE_APP_BASE_URL,
-    });
-
-    // Здесь вы можете обрабатывать ответ от сервера, если необходимо
-
-    console.log("Успешно отправлено!", response);
-  } catch (error) {
-    console.error("Ошибка при отправке формы", error);
-  }
+  const payload = { ...formData };
+  await axios.post("/register/", payload, {
+    baseURL: importMeta.VITE_APP_BASE_URL,
+  });
 };
 </script>
