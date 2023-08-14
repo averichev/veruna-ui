@@ -54,13 +54,12 @@ const handleSubmit = async () => {
   await httpClient
     .post("/login/", payload)
     .then(async (r) => {
-      console.log(r);
       localStorage.removeItem("jwt");
       localStorage.setItem("jwt", r.data["data"]["token"]);
       await httpClient
         .post("/api/protected/get-current-user/")
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch((axiosError) => {
           console.log(axiosError);
