@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="user in state.users" :key="user.id">
-          <UserListItem :user="user" />
+          <UserListItem :user="user" @delete="deleteUser" />
         </tr>
       </tbody>
     </table>
@@ -40,6 +40,18 @@ const getUsers = async () => {
     .post("/api/protected/user/list/")
     .then((response) => {
       state.users = response.data.items;
+    })
+    .catch((axiosError) => {
+      console.log(axiosError);
+    });
+};
+
+const deleteUser = async (e: IUserListItem) => {
+  await httpClient
+    .delete(`/api/protected/user/${e.id}/delete/`)
+    .then((r) => {
+      console.log(r);
+      state.users = state.users.filter((n) => n.id !== e.id);
     })
     .catch((axiosError) => {
       console.log(axiosError);

@@ -28,9 +28,13 @@ const state = reactive<IState>({
   show: false,
 });
 
+const emit = defineEmits<{
+  delete: [user: IUserListItem];
+}>();
+
 const text = ``;
 
 const onDelete = () => {
-  console.log(`delete user ${props.user.username} from pinia store`);
+  emit("delete", props.user);
 };
 </script>

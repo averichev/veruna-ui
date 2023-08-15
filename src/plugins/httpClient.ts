@@ -16,6 +16,10 @@ export default class Default {
     this.changeConfig();
     return this.client.post(path, data);
   }
+  delete(path: string, data?: any) {
+    this.changeConfig();
+    return this.client.delete(path, data);
+  }
   constructor() {
     this.config = {
       baseURL: importMeta.VITE_APP_BASE_URL,
