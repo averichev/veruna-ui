@@ -1,7 +1,12 @@
 <template>
   <div>
     <h1>Пользователи</h1>
-    <table class="table">
+    <div>
+      <button class="btn btn-sm" type="button" @click="goToCreateUser">
+        Добавить пользователя
+      </button>
+    </div>
+    <table v-if="state.users_is_loaded" class="table">
       <thead>
         <tr>
           <td style="width: 1px"></td>
@@ -21,25 +26,31 @@
 import Default from "../plugins/httpClient.ts";
 import { onMounted, reactive } from "vue";
 import { IUserListItem } from "../models";
+import { useRouter } from "vue-router";
 
 const state = reactive<IState>({
+  users_is_loaded: false,
   users: [],
 });
 interface IState {
   users: IUserListItem[];
+  users_is_loaded: boolean;
 }
 
 const httpClient = new Default();
+const router = useRouter();
 
 onMounted(async () => {
   await getUsers();
 });
 
 const getUsers = async () => {
+  state.users_is_loaded = false;
   await httpClient
     .post("/api/protected/user/list/")
     .then((response) => {
       state.users = response.data.items;
+      state.users_is_loaded = true;
     })
     .catch((axiosError) => {
       console.log(axiosError);
@@ -56,5 +67,10 @@ const deleteUser = async (e: IUserListItem) => {
     .catch((axiosError) => {
       console.log(axiosError);
     });
+};
+
+const goToCreateUser = () => {
+  // Now you can access params like:
+  router.push({ name: "users_create" });
 };
 </script>
