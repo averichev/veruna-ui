@@ -1,26 +1,9 @@
 <template>
   <div class="container-fluid">
+    <div v-if="currentUser">{{ currentUser.username }}</div>
     <div class="row">
       <div class="col-3">
         <ul class="nav flex-column">
-          <li class="nav-item">
-            <router-link
-              :to="{ name: 'register' }"
-              activeClass="active"
-              class="nav-link"
-            >
-              Регистрация
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link
-              :to="{ name: 'login' }"
-              activeClass="active"
-              class="nav-link"
-            >
-              Вход
-            </router-link>
-          </li>
           <li class="nav-item">
             <router-link
               :to="{ name: 'main' }"
@@ -47,4 +30,15 @@
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useCurrentUserStore } from "./stores/currentUser.ts";
+import { computed, onMounted } from "vue";
+
+const currentUserStore = useCurrentUserStore();
+
+onMounted(async () => {
+  await currentUserStore.initUser();
+});
+
+const currentUser = computed(() => currentUserStore.user);
+</script>

@@ -36,16 +36,20 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import Default from "../plugins/httpClient.ts";
+import { useCurrentUserStore } from "../stores/currentUser.ts";
+import { useRouter } from "vue-router";
 
 const httpClient = new Default();
+const router = useRouter();
 const formData = reactive({
   username: "",
   password: "",
 });
 
 const registerLink = { name: "register" };
+const currentUserStore = useCurrentUserStore();
 
 const handleSubmit = async () => {
   const payload = { ...formData };
@@ -54,17 +58,16 @@ const handleSubmit = async () => {
     .then(async (r) => {
       localStorage.removeItem("jwt");
       localStorage.setItem("jwt", r.data["data"]["token"]);
-      await httpClient
-        .post("/api/protected/get-current-user/")
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((axiosError) => {
-          console.log(axiosError);
-        });
+      await currentUserStore.initUser();
     })
     .catch((axiosError) => {
       console.log(axiosError);
     });
 };
+
+onMounted(() => {
+  if (currentUserStore.isInit) {
+    router.push({ name: "main" });
+  }
+});
 </script>
