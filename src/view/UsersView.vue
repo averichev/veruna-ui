@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div v-if="state.users_is_loaded">
     <h1>Пользователи</h1>
     <div>
       <button class="btn btn-sm" type="button" @click="goToCreateUser">
         Добавить пользователя
       </button>
     </div>
-    <table v-if="state.users_is_loaded" class="table">
+    <table class="table">
       <thead>
         <tr>
           <td style="width: 1px"></td>
