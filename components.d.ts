@@ -11,6 +11,7 @@ declare module 'vue' {
     BDropdownDivider: typeof import('bootstrap-vue-next')['BDropdownDivider']
     BDropdownItem: typeof import('bootstrap-vue-next')['BDropdownItem']
     BModal: typeof import('bootstrap-vue-next')['BModal']
+    PageListItem: typeof import('./src/components/PageListItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SiteListItem: typeof import('./src/components/SiteListItem.vue')['default']

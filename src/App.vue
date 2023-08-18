@@ -31,6 +31,15 @@
               Сайты
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link
+              :to="{ name: 'pages' }"
+              activeClass="active"
+              class="nav-link"
+            >
+              Страницы
+            </router-link>
+          </li>
         </ul>
       </div>
       <div class="col-9">
