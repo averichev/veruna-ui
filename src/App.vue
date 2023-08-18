@@ -22,6 +22,15 @@
               Пользователи
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link
+              :to="{ name: 'sites' }"
+              activeClass="active"
+              class="nav-link"
+            >
+              Сайты
+            </router-link>
+          </li>
         </ul>
       </div>
       <div class="col-9">

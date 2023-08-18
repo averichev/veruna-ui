@@ -47,7 +47,7 @@ onMounted(async () => {
 const getUsers = async () => {
   state.users_is_loaded = false;
   await httpClient
-    .post("/api/protected/user/list/")
+    .get("/api/protected/user/list/")
     .then((response) => {
       state.users = response.data.items;
       state.users_is_loaded = true;

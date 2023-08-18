@@ -13,6 +13,7 @@ declare module 'vue' {
     BModal: typeof import('bootstrap-vue-next')['BModal']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SiteListItem: typeof import('./src/components/SiteListItem.vue')['default']
     UserListItem: typeof import('./src/components/UserListItem.vue')['default']
   }
 }
