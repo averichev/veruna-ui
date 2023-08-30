@@ -50,6 +50,6 @@ onMounted(async () => {
 });
 
 const goToCreateUser = () => {
-  router.push({ name: "sites_create" });
+  router.push({ name: "pages_create" });
 };
 </script>
